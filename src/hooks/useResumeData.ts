@@ -20,43 +20,61 @@ export const useResumeData = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const userResponse = await fetch(`/api/user/${userId}`, {
-        method: "GET",
-      });
-      const user = await userResponse.json();
+      try {
+        const userResponse = await fetch(`/api/user/${userId}`, {
+          method: "GET",
+        });
+        const user = await userResponse.json();
 
-      const chatGPTResponse = await fetch("/api/generate", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          prompt: `Generate a resume for the following user: ${JSON.stringify(
-            user
-          )} based on this structure: ${JSON.stringify(
-            sampleResumeData
-          )}. Include these additional requirements:
-            Parameters:
-            - NDA Safe Mode: ${
-              ndaSafe === "true" ? "Yes" : "No"
-            }: with No use Company Name as a project title and for Yes replace company name with NDA.
-            - Client Industry: ${industry || "Not specified"}
-            - Client Priorities: ${clientFocus || "Not specified"}
-            - Language: ${language}
-            - Resume Style: ${style}
+        const chatGPTResponse = await fetch("/api/generate", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            prompt: `Generate a resume for the following user: ${JSON.stringify(
+              user
+            )} based on this structure: ${JSON.stringify(
+              sampleResumeData
+            )}. Include these additional requirements:
+              Parameters:
+              - NDA Safe Mode: ${
+                ndaSafe === "true" ? "Yes" : "No"
+              }: with No use Company Name as a project title and for Yes replace company name with NDA.
+              - Client Industry: ${industry || "Not specified"}
+              - Client Priorities: ${clientFocus || "Not specified"}
+              - Language: ${language}
+              - Resume Style: ${style}
 
-           Return only valid JSON with all fields`,
-        }),
-      });
+             Return only valid JSON with all fields`,
+          }),
+        });
 
-      const raw = (await chatGPTResponse.json())?.result;
-      const cleaned = raw.replace(/```json|```/g, "").trim();
-      const data = JSON.parse(cleaned);
+        if (!chatGPTResponse.ok) {
+          throw new Error(`API вернул ошибку: ${chatGPTResponse.status}`);
+        }
 
-      setData(data);
-      setLoading(false);
+        const apiResponse = await chatGPTResponse.json();
+        
+        if (!apiResponse?.result) {
+          throw new Error("Некорректный формат ответа от API");
+        }
+        
+        const raw = apiResponse.result;
+        const cleaned = raw.replace(/```json|```/g, "").trim();
+        const parsedData = JSON.parse(cleaned);
+
+        setData(parsedData);
+      } catch (err) {
+        console.error("Ошибка при получении данных:", err);
+        setError(err instanceof Error ? err : new Error(String(err)));
+        
+        // Не меняем данные, оставляем sampleResumeData
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchData();
-  }, [userId]);
+  }, [userId, ndaSafe, industry, clientFocus, language, style]);
 
   const updateData = (newData: Partial<ResumeData>) => {
     setData((prevData) => ({
