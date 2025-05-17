@@ -11,7 +11,7 @@ import {
   Svg,
   Path
 } from '@react-pdf/renderer';
-import { ResumeData } from '../../types/resume';
+import { ResumeData, Project } from '../../types/resume';
 
 // Регистрируем шрифты
 Font.register({
@@ -41,6 +41,28 @@ const styles = StyleSheet.create({
   content: {
     width: '70%',
     padding: 20,
+  },
+  // Стили для дополнительных страниц с двумя колонками
+  additionalPage: {
+    flexDirection: 'column',
+    backgroundColor: '#fff',
+    padding: 20,
+    fontFamily: 'Roboto',
+  },
+  columnsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  leftColumn: {
+    width: '48%',
+    marginRight: '2%',
+  },
+  rightColumn: {
+    width: '48%',
+    marginLeft: '2%',
+  },
+  experiencePageHeader: {
+    marginBottom: 20,
   },
   sectionHeading: {
     fontSize: 8,
@@ -204,129 +226,172 @@ const Logo = () => (
   </Svg>
 );
 
-// Основной компонент для PDF резюме
-export const ResumePDF = ({ data }: { data: ResumeData }) => (
-  <Document>
-    <Page size="A4" style={styles.page}>
-      {/* Боковая панель */}
-      <View style={styles.sidebar}>
-        {/* Логотип и контактная информация */}
-        <View style={styles.logoContainer}>
-          <Logo />
-          <Text style={styles.contactInfo}>sales@oxagile.com</Text>
-        </View>
+// Функция для разделения проектов на страницы
+const splitProjectsForPages = (projects: Project[]) => {
+  const firstPageProjects = projects.slice(0, 1); // Первый проект на первой странице
+  const additionalPagesProjects = projects.slice(1); // Остальные проекты на следующих страницах
+  
+  // Разделение остальных проектов на четные и нечетные для левой и правой колонок
+  const leftColumnProjects = additionalPagesProjects.filter((_, i) => i % 2 === 0);
+  const rightColumnProjects = additionalPagesProjects.filter((_, i) => i % 2 === 1);
+  
+  return { firstPageProjects, leftColumnProjects, rightColumnProjects };
+};
 
-        <SectionHeading>LEVEL OF EXPERIENCE</SectionHeading>
-        <View style={styles.skillList}>
-          {data.level_of_experience.map((skill, index) => (
-            <View key={index} style={styles.skillItem}>
-              <Text style={styles.skillName}>{skill.name}</Text>
-              <View style={styles.skillRating}>
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <Svg key={i} width={5} height={5} viewBox="0 0 5 5" style={{ marginRight: i < 4 ? 3 : 0, marginTop: 1 }}>
-                    <Path
-                      d="M2.5 5C3.88 5 5 3.88 5 2.5C5 1.12 3.88 0 2.5 0C1.12 0 0 1.12 0 2.5C0 3.88 1.12 5 2.5 5Z"
-                      fill={i < skill.rating ? '#c1272d' : '#d6d6d6'}
-                    />
-                  </Svg>
+// Функция для создания компонента проекта
+const ProjectComponent = ({ project }: { project: Project }) => (
+  <View style={{ marginBottom: 20 }} wrap={false}>
+    <Text style={styles.projectTitle}>{project.title}</Text>
+    <Text style={styles.projectDescription}>{project.description}</Text>
+
+    <View style={styles.projectDetail}>
+      <Text style={styles.projectDetailTitle}>Position:</Text>
+      <Text style={styles.projectDetailText}>{project.position}</Text>
+    </View>
+
+    <View style={styles.projectDetail}>
+      <Text style={styles.projectDetailTitle}>Team Size:</Text>
+      <Text style={styles.projectDetailText}>{project.team_size}</Text>
+    </View>
+
+    <View style={styles.projectDetail}>
+      <Text style={styles.projectDetailTitle}>Responsibilities:</Text>
+      <View>
+        {project.responsibilities.map((responsibility: string, idx: number) => (
+          <BulletPoint key={idx}>{responsibility}</BulletPoint>
+        ))}
+      </View>
+    </View>
+
+    <View style={styles.projectDetail}>
+      <Text style={styles.projectDetailTitle}>Key Technologies:</Text>
+      <Text style={styles.technologies}>
+        {Array.isArray(project.technologies) 
+          ? project.technologies.join(', ')
+          : (project.technologies || '')}
+      </Text>
+    </View>
+  </View>
+);
+
+// Основной компонент для PDF резюме
+export const ResumePDF = ({ data }: { data: ResumeData }) => {
+  const { firstPageProjects, leftColumnProjects, rightColumnProjects } = splitProjectsForPages(data.projects);
+  
+  return (
+    <Document>
+      {/* Первая страница */}
+      <Page size="A4" style={styles.page} wrap={false}>
+        {/* Боковая панель */}
+        <View style={styles.sidebar}>
+          {/* Логотип и контактная информация */}
+          <View style={styles.logoContainer}>
+            <Logo />
+            <Text style={styles.contactInfo}>sales@oxagile.com</Text>
+          </View>
+
+          <SectionHeading>LEVEL OF EXPERIENCE</SectionHeading>
+          <View style={styles.skillList}>
+            {data.level_of_experience.map((skill, index) => (
+              <View key={index} style={styles.skillItem}>
+                <Text style={styles.skillName}>{skill.name}</Text>
+                <View style={styles.skillRating}>
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <Svg key={i} width={5} height={5} viewBox="0 0 5 5" style={{ marginRight: i < 4 ? 3 : 0, marginTop: 1 }}>
+                      <Path
+                        d="M2.5 5C3.88 5 5 3.88 5 2.5C5 1.12 3.88 0 2.5 0C1.12 0 0 1.12 0 2.5C0 3.88 1.12 5 2.5 5Z"
+                        fill={i < skill.rating ? '#c1272d' : '#d6d6d6'}
+                      />
+                    </Svg>
+                  ))}
+                </View>
+              </View>
+            ))}
+          </View>
+
+          {data.skills && data.skills.length > 0 && (
+            <>
+              <SectionHeading>OTHER SKILLS</SectionHeading>
+              <View style={styles.skillList}>
+                {data.skills.map((category, index) => (
+                  <View key={index} style={styles.skillCategory}>
+                    <Text style={styles.skillCategoryTitle}>{category.category}</Text>
+                    <Text style={styles.skillCategoryItems}>{category.items.join(', ')}</Text>
+                  </View>
                 ))}
               </View>
-            </View>
-          ))}
-        </View>
+            </>
+          )}
 
-        {data.skills && data.skills.length > 0 && (
-          <>
-            <SectionHeading>OTHER SKILLS</SectionHeading>
-            <View style={styles.skillList}>
-              {data.skills.map((category, index) => (
-                <View key={index} style={styles.skillCategory}>
-                  <Text style={styles.skillCategoryTitle}>{category.category}</Text>
-                  <Text style={styles.skillCategoryItems}>{category.items.join(', ')}</Text>
-                </View>
-              ))}
-            </View>
-          </>
-        )}
-
-        <SectionHeading>EDUCATION</SectionHeading>
-        <View style={{ marginTop: 5 }}>
-          {data.education.map((edu, index) => (
-            <View key={index} style={styles.educationItem}>
-              <Text style={styles.educationDegree}>{edu.degree}</Text>
-              <Text style={styles.educationInstitution}>{edu.institution}</Text>
-            </View>
-          ))}
-        </View>
-
-        <SectionHeading>LANGUAGES</SectionHeading>
-        <View style={{ marginTop: 5 }}>
-          {data.languages.map((lang, index) => (
-            <View key={index} style={styles.languageItem}>
-              <Text style={styles.languageName}>{lang.language}</Text>
-              <Text style={styles.languageLevel}>{lang.level}</Text>
-            </View>
-          ))}
-        </View>
-      </View>
-
-      {/* Основное содержимое */}
-      <View style={styles.content}>
-        <Text style={styles.candidateName}>{data.candidate.name}</Text>
-        <Text style={styles.candidateGrade}>{data.candidate.grade}</Text>
-
-        <View style={styles.contentSection}>
-          <SectionHeading>CANDIDATE&apos;S OVERVIEW</SectionHeading>
+          <SectionHeading>EDUCATION</SectionHeading>
           <View style={{ marginTop: 5 }}>
-            {data.overview.map((item, index) => (
-              <BulletPoint key={index}>{item}</BulletPoint>
+            {data.education.map((edu, index) => (
+              <View key={index} style={styles.educationItem}>
+                <Text style={styles.educationDegree}>{edu.degree}</Text>
+                <Text style={styles.educationInstitution}>{edu.institution}</Text>
+              </View>
             ))}
           </View>
-        </View>
 
-        <View style={styles.contentSection}>
-          <SectionHeading>PROFESSIONAL EXPERIENCE</SectionHeading>
+          <SectionHeading>LANGUAGES</SectionHeading>
           <View style={{ marginTop: 5 }}>
-            {data.projects.map((project, index) => (
-              <View key={index} style={{ marginBottom: 20 }}>
-                <Text style={styles.projectTitle}>{project.title}</Text>
-                <Text style={styles.projectDescription}>{project.description}</Text>
-
-                <View style={styles.projectDetail}>
-                  <Text style={styles.projectDetailTitle}>Position:</Text>
-                  <Text style={styles.projectDetailText}>{project.position}</Text>
-                </View>
-
-                <View style={styles.projectDetail}>
-                  <Text style={styles.projectDetailTitle}>Team Size:</Text>
-                  <Text style={styles.projectDetailText}>{project.team_size}</Text>
-                </View>
-
-                <View style={styles.projectDetail}>
-                  <Text style={styles.projectDetailTitle}>Responsibilities:</Text>
-                  <View>
-                    {project.responsibilities.map((responsibility, idx) => (
-                      <BulletPoint key={idx}>{responsibility}</BulletPoint>
-                    ))}
-                  </View>
-                </View>
-
-                <View style={styles.projectDetail}>
-                  <Text style={styles.projectDetailTitle}>Key Technologies:</Text>
-                  <Text style={styles.technologies}>
-                    {Array.isArray(project.technologies) 
-                      ? project.technologies.join(', ')
-                      : (project.technologies || '')}
-                  </Text>
-                </View>
+            {data.languages.map((lang, index) => (
+              <View key={index} style={styles.languageItem}>
+                <Text style={styles.languageName}>{lang.language}</Text>
+                <Text style={styles.languageLevel}>{lang.level}</Text>
               </View>
             ))}
           </View>
         </View>
-      </View>
-    </Page>
-  </Document>
-);
+
+        {/* Основное содержимое */}
+        <View style={styles.content}>
+          <Text style={styles.candidateName}>{data.candidate.name}</Text>
+          <Text style={styles.candidateGrade}>{data.candidate.grade}</Text>
+
+          <View style={styles.contentSection}>
+            <SectionHeading>CANDIDATE&apos;S OVERVIEW</SectionHeading>
+            <View style={{ marginTop: 5 }}>
+              {data.overview.map((item, index) => (
+                <BulletPoint key={index}>{item}</BulletPoint>
+              ))}
+            </View>
+          </View>
+
+          <View style={styles.contentSection}>
+            <SectionHeading>PROFESSIONAL EXPERIENCE</SectionHeading>
+            <View style={{ marginTop: 5 }}>
+              {firstPageProjects.map((project: Project, index: number) => (
+                <ProjectComponent key={index} project={project} />
+              ))}
+            </View>
+          </View>
+        </View>
+      </Page>
+
+      {/* Дополнительные страницы с двумя колонками для остальных проектов */}
+      {(leftColumnProjects.length > 0 || rightColumnProjects.length > 0) && (
+        <Page size="A4" style={styles.additionalPage} wrap>
+          <View style={styles.columnsContainer} wrap={false}>
+            {/* Левая колонка */}
+            <View style={styles.leftColumn} wrap={false}>
+              {leftColumnProjects.map((project: Project, index: number) => (
+                <ProjectComponent key={index} project={project} />
+              ))}
+            </View>
+
+            {/* Правая колонка */}
+            <View style={styles.rightColumn} wrap={false}>
+              {rightColumnProjects.map((project: Project, index: number) => (
+                <ProjectComponent key={index} project={project} />
+              ))}
+            </View>
+          </View>
+        </Page>
+      )}
+    </Document>
+  );
+};
 
 // Компонент для просмотра PDF
 export const ResumePDFViewer = ({ data }: { data: ResumeData }) => (
