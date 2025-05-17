@@ -68,14 +68,22 @@ const styles = StyleSheet.create({
   skillItem: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 5,
+    marginBottom: 8,
+    alignItems: 'center',
+    paddingRight: 2,
   },
   skillName: {
     fontSize: 8,
     fontWeight: 400,
+    width: '65%',
+    flexWrap: 'wrap',
   },
   skillRating: {
     flexDirection: 'row',
+    alignItems: 'center',
+    width: '35%',
+    justifyContent: 'flex-end',
+    marginTop: 0,
   },
   skillRatingDot: {
     fontSize: 7,
@@ -184,16 +192,6 @@ const BulletPoint = ({ children }: { children: React.ReactNode }) => (
   </View>
 );
 
-const SkillRating = ({ rating }: { rating: number }) => (
-  <View style={styles.skillRating}>
-    {Array.from({ length: 5 }).map((_, i) => (
-      <Text key={i} style={[styles.skillRatingDot, { color: i < rating ? '#c1272d' : '#d6d6d6' }]}>
-        ●
-      </Text>
-    ))}
-  </View>
-);
-
 // Компонент для логотипа напрямую в SVG
 const Logo = () => (
   <Svg viewBox="0 0 88 24" width={88} height={24}>
@@ -220,7 +218,16 @@ export const ResumePDF = ({ data }: { data: ResumeData }) => (
           {data.level_of_experience.map((skill, index) => (
             <View key={index} style={styles.skillItem}>
               <Text style={styles.skillName}>{skill.name}</Text>
-              <SkillRating rating={skill.rating} />
+              <View style={styles.skillRating}>
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <Svg key={i} width={5} height={5} viewBox="0 0 5 5" style={{ marginRight: i < 4 ? 3 : 0, marginTop: 1 }}>
+                    <Path
+                      d="M2.5 5C3.88 5 5 3.88 5 2.5C5 1.12 3.88 0 2.5 0C1.12 0 0 1.12 0 2.5C0 3.88 1.12 5 2.5 5Z"
+                      fill={i < skill.rating ? '#c1272d' : '#d6d6d6'}
+                    />
+                  </Svg>
+                ))}
+              </View>
             </View>
           ))}
         </View>
