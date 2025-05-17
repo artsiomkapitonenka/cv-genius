@@ -53,7 +53,7 @@ export default function ResumePage() {
             <ResumePDFViewer data={data} />
           </div>
         ) : (
-          <div className="rounded-lg overflow-hidden shadow-lg print:shadow-none">
+          <div className="rounded-lg overflow-hidden print:shadow-none">
             <ResumeLayout data={data} />
           </div>
         )}
