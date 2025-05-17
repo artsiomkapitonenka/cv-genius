@@ -24,3 +24,45 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Стили для печати PDF */
+@media print {
+  @page {
+    margin: 0;
+    size: A4 portrait;
+  }
+  
+  body {
+    margin: 0;
+    padding: 0;
+    background: #fff !important;
+    color: #000 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    color-adjust: exact;
+  }
+  
+  .print-hidden {
+    display: none !important;
+  }
+}
+
+/* Специальные стили для PDF экспорта */
+.pdf-container {
+  width: 210mm; /* Ширина A4 */
+  min-height: 297mm; /* Высота A4 */
+  background-color: white;
+  box-sizing: border-box;
+  overflow: hidden;
+  position: relative;
+}
+
+.pdf-content {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.pdf-sidebar {
+  background-color: rgba(248,248,248,1) !important;
+}

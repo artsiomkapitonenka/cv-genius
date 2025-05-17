@@ -15,7 +15,7 @@ export const sampleResumeData: ResumeData = {
   ],
 
   "level_of_experience": [
-    { "name": "Selenium WebDriver", "rating": 3 },
+    { "name": "Selenium WebDriver", "rating": 1 },
     { "name": "Appium", "rating": 5 },
     { "name": "Groovy", "rating": 5 },
     { "name": "API testing", "rating": 4 },

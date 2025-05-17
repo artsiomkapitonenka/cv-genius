@@ -1,0 +1,29 @@
+/* Стили для режима экспорта PDF */
+.pdf-export-mode {
+  background-color: white !important;
+}
+
+.pdf-export-mode .container {
+  max-width: 100% !important;
+  padding: 0 !important;
+}
+
+.pdf-ready {
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  overflow: visible !important;
+}
+
+/* Явное указание фонового цвета для sidebar */
+.pdf-ready .pdf-sidebar {
+  background-color: rgba(248,248,248,1) !important;
+}
+
+/* Исправление размеров для A4 */
+.pdf-ready .pdf-container {
+  padding: 0;
+  margin: 0;
+  width: 210mm;
+  min-height: 297mm;
+  max-width: 100%;
+} 
