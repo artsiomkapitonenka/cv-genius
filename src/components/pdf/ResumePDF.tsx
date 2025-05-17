@@ -36,6 +36,7 @@ const styles = StyleSheet.create({
     width: '30%',
     backgroundColor: 'rgba(248,248,248,1)',
     padding: 20,
+    paddingTop: 25,
   },
   content: {
     width: '70%',
@@ -53,6 +54,7 @@ const styles = StyleSheet.create({
     fontSize: 28,
     fontWeight: 400,
     marginBottom: 5,
+    marginTop: 3,
   },
   candidateGrade: {
     fontSize: 13,
@@ -167,6 +169,7 @@ const styles = StyleSheet.create({
   },
   logoContainer: {
     marginBottom: 15,
+    marginTop: 5,
   },
   logo: {
     width: 87,
