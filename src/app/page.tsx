@@ -1,7 +1,5 @@
-import * as XLSX from "xlsx";
-import fs from "fs";
-import path from "path";
 import ClientForm from "@/app/components/ClientForm";
+import Link from "next/link";
 
 export default function Home() {
   // const filePath = path.join(process.cwd(), "public", "resume.xlsx");
@@ -12,34 +10,40 @@ export default function Home() {
   // const data: any[][] = XLSX.utils.sheet_to_json(sheet, { header: 1 });
 
   return (
-    <main className="max-w-4xl mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-6">CVGenius: Резюме из Excel</h1>
+    <main className="min-h-screen bg-gray-50 p-6">
+      <div className="max-w-4xl mx-auto p-8 bg-white rounded-lg shadow-md">
+        <h1 className="text-3xl font-bold mb-6 text-gray-800">CVGenius: Резюме из Excel</h1>
 
-      <ClientForm />
+        <div className="mb-8 bg-blue-50 p-6 rounded-lg border border-blue-100">
+          <h2 className="text-xl font-semibold mb-4 text-blue-800">Доступные шаблоны</h2>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div className="bg-white p-4 rounded border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
+              <h3 className="font-medium mb-2">Профессиональный шаблон</h3>
+              <p className="text-sm text-gray-600 mb-4">Классический дизайн резюме с чистым и структурированным форматом. Идеально для сфер IT, финансов и управления.</p>
+              <Link 
+                href="/resume" 
+                className="inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors"
+              >
+                Просмотр шаблона
+              </Link>
+            </div>
+            <div className="bg-white p-4 rounded border border-gray-200 shadow-sm opacity-50">
+              <h3 className="font-medium mb-2">Креативный шаблон</h3>
+              <p className="text-sm text-gray-600 mb-4">Современный дизайн для творческих профессий с возможностью добавления графического портфолио.</p>
+              <button 
+                disabled
+                className="inline-block bg-gray-400 text-white px-4 py-2 rounded cursor-not-allowed"
+              >
+                Скоро в доступе
+              </button>
+            </div>
+          </div>
+        </div>
 
-      <div className="overflow-auto border rounded mt-8">
-        {/* <table className="min-w-full table-auto border-collapse">
-          <thead className="bg-gray-200">
-            <tr>
-              {data[0].map((cell, idx) => (
-                <th key={idx} className="border px-4 py-2 text-left">
-                  {cell}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {data.slice(1).map((row, rowIndex) => (
-              <tr key={rowIndex}>
-                {row.map((cell, colIndex) => (
-                  <td key={colIndex} className="border px-4 py-2">
-                    {cell}
-                  </td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table> */}
+        <div className="p-6 bg-gray-50 rounded-lg border border-gray-200">
+          <h2 className="text-xl font-semibold mb-4">Загрузить данные из Excel</h2>
+          <ClientForm />
+        </div>
       </div>
     </main>
   );
