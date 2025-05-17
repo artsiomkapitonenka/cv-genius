@@ -1,0 +1,321 @@
+[
+  {
+    "id": 10294,
+    "name": "Maria P.",
+    "position": "PHP Developer",
+    "experience_years": 2,
+    "skills": [
+      "PHP",
+      "Laravel",
+      "Symfony",
+      "MySQL",
+      "Docker",
+      "JavaScript",
+      "HTML5",
+      "CSS3",
+      "Vue.js",
+      "React",
+      "Bootstrap",
+      "Redis",
+      "MongoDB",
+      "Apache",
+      "Nginx",
+      "Jenkins",
+      "GitLab CI/CD",
+      "AWS",
+      "Stripe API",
+      "SendGrid",
+      "Composer",
+      "Doctrine ORM",
+      "PHPUnit",
+      "Behat",
+      "Codeception",
+      "JIRA",
+      "Slack",
+      "Confluence"
+    ],
+    "summary_notes": [
+      "Over 10 years of experience in full-stack web development",
+      "backend php-focused dev",
+      "used Laravel Symfony MySQL PostgreSQL",
+      "experience with REST apis and scalable systems",
+      "Worked with CI/CD pipelines, docker, deployment AWS",
+      "Team lead exp — mentoring juniors, collaborating in Agile envs"
+    ],
+    "tech_experience": [
+      { "technology": "PHP", "level": 5 },
+      { "technology": "Laravel", "level": 5 },
+      { "technology": "Symfony", "level": 4 },
+      { "technology": "MySQL", "level": 5 },
+      { "technology": "Docker", "level": 4 },
+      { "technology": "JavaScript", "level": 4 }
+    ],
+    "education": [
+      {
+        "degree": "Bachelor's Degree",
+        "field": "Web Design and Computer Graphics",
+        "institution": "Belarusian State University of Informatics and Radioelectronics"
+      }
+    ],
+    "language_en": "Upper-Intermediate",
+    "projects": [
+      {
+        "company_name": "Duolingo",
+        "title": "Subscription-Based E-Learning Platform",
+        "description": "Digital education platform with courses, quizzes, role-based auth, payment integration",
+        "role": "PHP Dev",
+        "team_size": 8,
+        "technologies": [
+          "Laravel",
+          "MySQL",
+          "Redis",
+          "Docker",
+          "GitLab CI",
+          "React",
+          "AWS S3",
+          "Stripe"
+        ],
+        "responsibilities": [
+          "designed backend modules",
+          "wrote REST apis",
+          "set up CI/CD and docker envs",
+          "unit tests (PHPUnit/Behat)",
+          "cache optimization using redis",
+          "integrated stripe + sendgrid"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 11982,
+    "name": "Ivan K.",
+    "position": "Senior JavaScript Developer",
+    "experience_years": 8,
+    "skills": [
+      "React",
+      "Vue.js",
+      "Angular",
+      "Redux",
+      "Next.js",
+      "Node.js",
+      "NestJS",
+      "Express",
+      "MongoDB",
+      "PostgreSQL",
+      "Jest",
+      "Mocha",
+      "Chai",
+      "ESLint",
+      "Cypress",
+      "Tailwind CSS",
+      "Chart.js",
+      "SCSS",
+      "Webpack",
+      "Docker",
+      "Vercel",
+      "GitHub Actions",
+      "Jenkins",
+      "GraphQL",
+      "Apollo Client",
+      "Axios",
+      "REST",
+      "JIRA",
+      "Slack",
+      "Figma",
+      "Trello"
+    ],
+    "summary_notes": [
+      "fullstack JS dev",
+      "Worked with React Angular Vue",
+      "GraphQL + REST APIs",
+      "backend: nodejs express microservices",
+      "docker deployment, ci/cd, codebase modularity",
+      "collab with designers, ux/ui focus"
+    ],
+    "tech_experience": [
+      { "technology": "JavaScript", "level": 5 },
+      { "technology": "TypeScript", "level": 4 },
+      { "technology": "React", "level": 5 },
+      { "technology": "Node.js", "level": 5 },
+      { "technology": "GraphQL", "level": 4 },
+      { "technology": "Docker", "level": 3 }
+    ],
+    "education": [
+      {
+        "degree": "Bachelor's",
+        "field": "Web Design and Computer Graphics",
+        "university": "Belarusian State University of Informatics and Radioelectronics"
+      },
+      {
+        "degree": "Bachelor's",
+        "field": "Radioecology",
+        "university": "International Sakharov Environmental Institute of BSU"
+      }
+    ],
+    "language_en": "Advanced",
+    "projects": [
+      {
+        "company_name": "Mira",
+        "title": "Whiteboard Collab Tool",
+        "description": "web-based tool for drawing + real-time sync via websockets",
+        "role": "Senior JS Dev",
+        "team_size": 6,
+        "technologies": [
+          "React",
+          "Node.js",
+          "Express",
+          "WebSockets",
+          "Firebase",
+          "Tailwind CSS",
+          "Redux Toolkit",
+          "TypeScript",
+          "Figma",
+          "Jest"
+        ],
+        "responsibilities": [
+          "react UI arch",
+          "ws + node backend",
+          "firebase storage + auth",
+          "jest tests",
+          "UX collab",
+          "vercel ci deploy"
+        ]
+      },
+      {
+        "company_name": "Models",
+        "title": "PWA Retail App",
+        "description": "offline-ready PWA with stripe, microfrontend, elasticsearch",
+        "role": "Lead JS Engineer",
+        "team_size": 10,
+        "technologies": [
+          "React",
+          "Node.js",
+          "Express",
+          "WebSockets",
+          "Firebase",
+          "Tailwind CSS",
+          "Redux Toolkit",
+          "TypeScript",
+          "Figma",
+          "Jest"
+        ],
+        "responsibilities": [
+          "microfrontend setup",
+          "react + redux frontend",
+          "api integration",
+          "stripe + caching",
+          "perf optimization",
+          "mentorship"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 20417,
+    "name": "Olga R.",
+    "position": "Senior QA Engineer",
+    "experience_years": 5,
+    "skills": [
+      "Selenium",
+      "Cypress",
+      "Playwright",
+      "TestNG",
+      "Allure",
+      "RestAssured",
+      "Test Planning",
+      "Bug Tracking",
+      "Exploratory Testing",
+      "Regression Testing",
+      "Postman",
+      "Swagger",
+      "JMeter",
+      "k6",
+      "Python",
+      "Java",
+      "JavaScript",
+      "Jenkins",
+      "Git",
+      "Docker",
+      "Allure Reports",
+      "TestRail",
+      "JIRA",
+      "Confluence",
+      "Slack",
+      "Zephyr",
+      "Qase"
+    ],
+    "summary_notes": [
+      "manual & auto testing, enterprise apps",
+      "test strategy creation, documentation expert",
+      "frameworks with selenium python java",
+      "ci/cd, agile, test data management",
+      "focus on usability perf sec testing"
+    ],
+    "tech_experience": [
+      { "technology": "Manual Testing", "level": 5 },
+      { "technology": "Selenium", "level": 4 },
+      { "technology": "Postman", "level": 4 },
+      { "technology": "JMeter", "level": 3 },
+      { "technology": "TestRail", "level": 5 },
+      { "technology": "Python", "level": 4 }
+    ],
+    "education": [
+      {
+        "degree": "Bachelor",
+        "field": "Web Design and Computer Graphics",
+        "institution": "Belarusian State University of Informatics and Radioelectronics"
+      }
+    ],
+    "language_eng": "Upper-Intermediate",
+    "projects": [
+      {
+        "company_name": "Project Orion",
+        "title": "Insurance Claim Automation System",
+        "description": "platform for insurance claims with API + fraud detection + framework",
+        "role": "QA Automation Engineer",
+        "team_size": 7,
+        "technologies": [
+          "Python",
+          "Selenium",
+          "Postman",
+          "JMeter",
+          "Docker",
+          "TestNG",
+          "Allure",
+          "Jenkins"
+        ],
+        "responsibilities": [
+          "auto test scripts (python+postman)",
+          "scenario writing",
+          "perf testing",
+          "ci integration",
+          "QA + dev sync"
+        ]
+      },
+      {
+        "company_name": "Kufar",
+        "title": "E-Gov Portal",
+        "description": "citizen service system: docs, appt mgmt, compliance testing",
+        "role": "Senior QA Engineer",
+        "team_size": 12,
+        "technologies": [
+          "Java",
+          "Selenium",
+          "TestNG",
+          "Qase",
+          "PostgreSQL",
+          "BrowserStack",
+          "Swagger",
+          "Zephyr"
+        ],
+        "responsibilities": [
+          "test plans/checklists",
+          "cross-browser testing",
+          "coverage metrics",
+          "automated suite support",
+          "triage coordination"
+        ]
+      }
+    ]
+  }
+]
