@@ -8,7 +8,8 @@ import {
   Font,
   PDFViewer,
   Svg,
-  Path
+  Path,
+  BlobProvider
 } from '@react-pdf/renderer';
 import { ResumeData, Project } from '../../types/resume';
 
@@ -402,35 +403,88 @@ export const ResumePDFViewer = ({ data }: { data: ResumeData }) => (
   </PDFViewer>
 );
 
-// Component for downloading PDF - alternative version without PDFDownloadLink
-export const ResumePDFDownloadLink = () => {
-  const handleDownload = () => {
-    // Show notification about compatibility issue
-    alert(`Direct PDF download is currently unavailable due to library compatibility issues. Please use the PDF preview and then save the document.`);
-  };
-  
-  return (
-    <button 
-      onClick={handleDownload}
-      className="flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-md font-medium transition-colors"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="16" 
-        height="16"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className="w-5 h-5"
+// Component for downloading PDF
+export const ResumePDFDownloadLink = ({ data }: { data?: ResumeData }) => {
+  // Если данные не переданы, показываем заглушку
+  if (!data) {
+    return (
+      <button 
+        className="flex items-center justify-center gap-2 bg-gray-500 text-white px-6 py-2 rounded-md font-medium transition-colors cursor-not-allowed opacity-70"
+        title="Resume data not available"
+        disabled
       >
-        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-        <polyline points="7 10 12 15 17 10"></polyline>
-        <line x1="12" y1="15" x2="12" y2="3"></line>
-      </svg>
-      Download PDF
-    </button>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16" 
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="w-5 h-5"
+        >
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+          <polyline points="7 10 12 15 17 10"></polyline>
+          <line x1="12" y1="15" x2="12" y2="3"></line>
+        </svg>
+        Download PDF
+      </button>
+    );
+  }
+
+  return (
+    <BlobProvider document={<ResumePDF data={data} />}>
+      {({ blob, url, loading, error }) => {
+        if (loading) {
+          return (
+            <button 
+              className="flex items-center justify-center gap-2 bg-gray-500 text-white px-6 py-2 rounded-md font-medium transition-colors cursor-wait"
+              disabled
+            >
+              Preparing PDF...
+            </button>
+          );
+        }
+
+        if (error || !blob) {
+          return (
+            <button 
+              onClick={() => alert(`PDF generation error: ${error || 'Unknown error'}`)}
+              className="flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-md font-medium transition-colors"
+            >
+              Error downloading
+            </button>
+          );
+        }
+
+        return (
+          <a
+            href={url as string}
+            download={`${data.candidate.name.replace(/\s+/g, '_')}_Resume.pdf`}
+            className="flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-md font-medium transition-colors"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16" 
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="w-5 h-5"
+            >
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            Download PDF
+          </a>
+        );
+      }}
+    </BlobProvider>
   );
 }; 

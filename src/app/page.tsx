@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import users from "@/data/users.json";
 import Textarea from "@/app/ui/Textarea";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 
 const industryOptions = [
   "Fintech",
@@ -32,6 +32,8 @@ const STORAGE_KEY = "cv-genius-parameters";
 
 export default function Home() {
   const searchParams = useSearchParams();
+  const router = useRouter();
+  const urlCleaned = useRef(false);
 
   // Инициализация состояний с дефолтными значениями для избежания проблем с гидрацией
   const [ndaSafe, setNdaSafe] = useState(true);
@@ -42,6 +44,14 @@ export default function Home() {
   const [model, setModel] = useState("openai");
   const [activeUserId, setActiveUserId] = useState<number | null>(null);
   const [showParameters, setShowParameters] = useState(false);
+  
+  // Функция для очистки URL без параметров
+  const cleanUrl = useCallback(() => {
+    if (!urlCleaned.current && typeof window !== 'undefined') {
+      urlCleaned.current = true;
+      router.replace('/', { scroll: false });
+    }
+  }, [router]);
   
   // Загрузка сохраненных настроек после монтирования (только на клиенте)
   useEffect(() => {
@@ -62,7 +72,16 @@ export default function Home() {
     }
     
     // Затем проверяем URL-параметры (они имеют приоритет)
-    if (searchParams) {
+    const hasParams = searchParams && Boolean(
+      searchParams.get("model") || 
+      searchParams.get("ndaSafe") || 
+      searchParams.get("industry") || 
+      searchParams.get("clientFocus") || 
+      searchParams.get("language") || 
+      searchParams.get("style")
+    );
+    
+    if (hasParams && searchParams) {
       const modelParam = searchParams.get("model");
       const ndaSafeParam = searchParams.get("ndaSafe");
       const industryParam = searchParams.get("industry");
@@ -76,8 +95,11 @@ export default function Home() {
       if (clientFocusParam) setClientFocus(clientFocusParam);
       if (languageParam) setLanguage(languageParam);
       if (styleParam) setStyle(styleParam);
+      
+      // Очищаем URL после применения параметров
+      setTimeout(cleanUrl, 100);
     }
-  }, [searchParams]); // searchParams как зависимость
+  }, [searchParams, cleanUrl]); // Зависим от searchParams и cleanUrl
 
   // Сохранение параметров в localStorage при их изменении
   useEffect(() => {

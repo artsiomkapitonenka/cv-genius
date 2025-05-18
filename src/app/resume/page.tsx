@@ -107,7 +107,7 @@ export default function ResumePage() {
                 >
                   PDF Preview
                 </button>
-                <ResumePDFDownloadLink />
+                <ResumePDFDownloadLink data={data} />
               </>
             )}
           </div>
