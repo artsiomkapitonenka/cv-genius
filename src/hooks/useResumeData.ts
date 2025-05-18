@@ -13,6 +13,7 @@ export const useResumeData = () => {
   const clientFocus = searchParams?.get("clientFocus");
   const language = searchParams?.get("language");
   const style = searchParams?.get("style");
+  const model = searchParams?.get("model") || "openai";
 
   const [data, setData] = useState<ResumeData>(sampleResumeData);
   const [loading, setLoading] = useState(true);
@@ -45,17 +46,18 @@ export const useResumeData = () => {
               - Resume Style: ${style}
 
              Return only valid JSON with all fields`,
+            model: model,
           }),
         });
 
         if (!chatGPTResponse.ok) {
-          throw new Error(`API вернул ошибку: ${chatGPTResponse.status}`);
+          throw new Error(`API returned an error: ${chatGPTResponse.status}`);
         }
 
         const apiResponse = await chatGPTResponse.json();
         
         if (!apiResponse?.result) {
-          throw new Error("Некорректный формат ответа от API");
+          throw new Error("Invalid API response format");
         }
         
         const raw = apiResponse.result;
@@ -64,17 +66,17 @@ export const useResumeData = () => {
 
         setData(parsedData);
       } catch (err) {
-        console.error("Ошибка при получении данных:", err);
+        console.error("Error fetching data:", err);
         setError(err instanceof Error ? err : new Error(String(err)));
         
-        // Не меняем данные, оставляем sampleResumeData
+        // Keep sample data
       } finally {
         setLoading(false);
       }
     };
 
     fetchData();
-  }, [userId, ndaSafe, industry, clientFocus, language, style]);
+  }, [userId, ndaSafe, industry, clientFocus, language, style, model]);
 
   const updateData = (newData: Partial<ResumeData>) => {
     setData((prevData) => ({

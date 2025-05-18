@@ -5,45 +5,85 @@ export default async function handler(
   res: NextApiResponse
 ) {
   try {
-    const { prompt } = req.body;
+    const { prompt, model = "openai" } = req.body;
 
-    const openaiRes = await fetch(
-      "https://api.openai.com/v1/chat/completions",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`,
-        },
-        body: JSON.stringify({
-          model: "gpt-3.5-turbo",
-          messages: [{ role: "user", content: prompt }],
-          temperature: 0.7,
-        }),
+    if (model === "openai") {
+      const openaiRes = await fetch(
+        "https://api.openai.com/v1/chat/completions",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`,
+          },
+          body: JSON.stringify({
+            model: "gpt-3.5-turbo",
+            messages: [{ role: "user", content: prompt }],
+            temperature: 0.7,
+          }),
+        }
+      );
+
+      const data = await openaiRes.json();
+
+      // Check response success
+      if (!openaiRes.ok) {
+        console.error("OpenAI API error:", data.error || openaiRes.statusText);
+        return res.status(openaiRes.status).json({
+          error: data.error?.message || "Error accessing OpenAI API",
+        });
       }
-    );
 
-    const data = await openaiRes.json();
+      // Check if data exists
+      if (!data.choices || !data.choices[0]) {
+        console.error("Unexpected API response structure:", data);
+        return res
+          .status(500)
+          .json({ error: "Unexpected API response structure" });
+      }
 
-    // Проверка успешности ответа
-    if (!openaiRes.ok) {
-      console.error("OpenAI API error:", data.error || openaiRes.statusText);
-      return res.status(openaiRes.status).json({
-        error: data.error?.message || "Ошибка при обращении к OpenAI API",
-      });
+      res.status(200).json({ result: data.choices[0].message.content });
+    } else if (model === "deepseek") {
+      const deepseekRes = await fetch(
+        "https://api.deepseek.com/v1/chat/completions",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${process.env.DEEPSEEK_API_KEY}`,
+          },
+          body: JSON.stringify({
+            model: "deepseek-chat",
+            messages: [{ role: "user", content: prompt }],
+            temperature: 0.7,
+          }),
+        }
+      );
+
+      const data = await deepseekRes.json();
+
+      // Check response success
+      if (!deepseekRes.ok) {
+        console.error("DeepSeek API error:", data.error || deepseekRes.statusText);
+        return res.status(deepseekRes.status).json({
+          error: data.error?.message || "Error accessing DeepSeek API",
+        });
+      }
+
+      // Check if data exists (assuming DeepSeek has similar format)
+      if (!data.choices || !data.choices[0]) {
+        console.error("Unexpected API response structure:", data);
+        return res
+          .status(500)
+          .json({ error: "Unexpected API response structure" });
+      }
+
+      res.status(200).json({ result: data.choices[0].message.content });
+    } else {
+      return res.status(400).json({ error: "Unsupported model" });
     }
-
-    // Проверка наличия данных
-    if (!data.choices || !data.choices[0]) {
-      console.error("Unexpected API response structure:", data);
-      return res
-        .status(500)
-        .json({ error: "Неожиданная структура ответа API" });
-    }
-
-    res.status(200).json({ result: data.choices[0].message.content });
   } catch (error) {
-    console.error("Error in OpenAI API handler:", error);
-    res.status(500).json({ error: "Внутренняя ошибка сервера" });
+    console.error("Error in API handler:", error);
+    res.status(500).json({ error: "Internal server error" });
   }
 }

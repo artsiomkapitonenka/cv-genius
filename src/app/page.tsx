@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import users from "@/data/users.json";
 import Textarea from "@/app/ui/Textarea";
+import { useSearchParams } from "next/navigation";
 
 const industryOptions = [
   "Fintech",
@@ -17,12 +18,78 @@ const industryOptions = [
   "Government",
 ];
 
+// Типы параметров для localStorage
+interface CustomParameters {
+  ndaSafe: boolean;
+  industry: string;
+  clientFocus: string;
+  language: string;
+  style: string;
+  model: string;
+}
+
+// Ключ для хранения в localStorage
+const STORAGE_KEY = "cv-genius-parameters";
+
 export default function Home() {
+  const searchParams = useSearchParams();
+
+  // Инициализация состояний с дефолтными значениями для избежания проблем с гидрацией
   const [ndaSafe, setNdaSafe] = useState(true);
   const [industry, setIndustry] = useState("");
   const [clientFocus, setClientFocus] = useState("");
   const [language, setLanguage] = useState("en");
   const [style, setStyle] = useState("Technical");
+  const [model, setModel] = useState("openai");
+  
+  // Загрузка сохраненных настроек после монтирования (только на клиенте)
+  useEffect(() => {
+    // Загрузка из localStorage
+    try {
+      const savedParams = localStorage.getItem(STORAGE_KEY);
+      if (savedParams) {
+        const params = JSON.parse(savedParams) as CustomParameters;
+        setNdaSafe(params.ndaSafe);
+        setIndustry(params.industry);
+        setClientFocus(params.clientFocus);
+        setLanguage(params.language);
+        setStyle(params.style);
+        setModel(params.model);
+      }
+    } catch (error) {
+      console.error("Ошибка при загрузке параметров:", error);
+    }
+    
+    // Затем проверяем URL-параметры (они имеют приоритет)
+    if (searchParams) {
+      const modelParam = searchParams.get("model");
+      const ndaSafeParam = searchParams.get("ndaSafe");
+      const industryParam = searchParams.get("industry");
+      const clientFocusParam = searchParams.get("clientFocus");
+      const languageParam = searchParams.get("language");
+      const styleParam = searchParams.get("style");
+
+      if (modelParam) setModel(modelParam);
+      if (ndaSafeParam) setNdaSafe(ndaSafeParam === "true");
+      if (industryParam) setIndustry(industryParam);
+      if (clientFocusParam) setClientFocus(clientFocusParam);
+      if (languageParam) setLanguage(languageParam);
+      if (styleParam) setStyle(styleParam);
+    }
+  }, [searchParams]); // searchParams как зависимость
+
+  // Сохранение параметров в localStorage при их изменении
+  useEffect(() => {
+    const params: CustomParameters = {
+      ndaSafe,
+      industry,
+      clientFocus,
+      language,
+      style,
+      model
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(params));
+  }, [ndaSafe, industry, clientFocus, language, style, model]);
 
   return (
     <main className="min-h-screen bg-gray-50 p-6">
@@ -42,9 +109,7 @@ export default function Home() {
                 </h3>
                 <p className="text-sm text-gray-600 mb-4">{user.position}</p>
                 <Link
-                  href={`/resume?userId=${
-                    index + 1
-                  }&ndaSafe=${ndaSafe}&industry=${industry}&clientFocus=${clientFocus}&language=${language}&style=${style}`}
+                  href={`/resume?userId=${index + 1}&ndaSafe=${ndaSafe}&industry=${encodeURIComponent(industry)}&clientFocus=${encodeURIComponent(clientFocus)}&language=${language}&style=${style}&model=${model}`}
                   className="inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors"
                 >
                   Create CV
@@ -64,7 +129,7 @@ export default function Home() {
               <input
                 type="checkbox"
                 checked={ndaSafe}
-                onChange={(e) => setNdaSafe(e.target.checked)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNdaSafe(e.target.checked)}
               />
               NDA Safe Mode
             </label>
@@ -73,7 +138,7 @@ export default function Home() {
               Client Industry:
               <select
                 value={industry}
-                onChange={(e) => setIndustry(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setIndustry(e.target.value)}
                 className="mt-1 w-full border border-gray-300 px-3 py-2 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
               >
                 <option value="">Select industry</option>
@@ -89,7 +154,7 @@ export default function Home() {
               Client Priorities:
               <Textarea
                 value={clientFocus}
-                onChange={(e) => setClientFocus(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setClientFocus(e.target.value)}
                 placeholder="AWS, Team Lead, Healthcare"
                 className="mt-1"
               />
@@ -99,7 +164,7 @@ export default function Home() {
               Language:
               <select
                 value={language}
-                onChange={(e) => setLanguage(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setLanguage(e.target.value)}
                 className="mt-1 w-full border border-gray-300 px-3 py-2 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
               >
                 <option value="en">English</option>
@@ -111,11 +176,23 @@ export default function Home() {
               Resume Style:
               <select
                 value={style}
-                onChange={(e) => setStyle(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setStyle(e.target.value)}
                 className="mt-1 w-full border border-gray-300 px-3 py-2 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
               >
                 <option value="Technical">Technical</option>
                 <option value="Sales-Oriented">Sales-Oriented</option>
+              </select>
+            </label>
+            
+            <label className="block text-gray-700 font-medium">
+              AI Model:
+              <select
+                value={model}
+                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setModel(e.target.value)}
+                className="mt-1 w-full border border-gray-300 px-3 py-2 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              >
+                <option value="openai">OpenAI</option>
+                <option value="deepseek">DeepSeek</option>
               </select>
             </label>
           </div>
