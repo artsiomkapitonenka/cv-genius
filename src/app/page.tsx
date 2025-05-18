@@ -118,7 +118,7 @@ export default function Home() {
         {showParameters && (
           <div className="bg-white border border-blue-200 p-6 rounded-lg shadow-md mb-6 animate-fadeIn">
             <h2 className="text-xl font-bold mb-4 text-blue-700">
-              Custom Parameters
+              AI Model Parameters
             </h2>
 
             <div className="grid gap-6 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1">
