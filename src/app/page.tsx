@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useState, useEffect } from "react";
 import users from "@/data/users.json";
 import Textarea from "@/app/ui/Textarea";
@@ -41,6 +40,8 @@ export default function Home() {
   const [language, setLanguage] = useState("en");
   const [style, setStyle] = useState("Technical");
   const [model, setModel] = useState("openai");
+  const [activeUserId, setActiveUserId] = useState<number | null>(null);
+  const [showParameters, setShowParameters] = useState(false);
   
   // Загрузка сохраненных настроек после монтирования (только на клиенте)
   useEffect(() => {
@@ -57,7 +58,7 @@ export default function Home() {
         setModel(params.model);
       }
     } catch (error) {
-      console.error("Ошибка при загрузке параметров:", error);
+      console.error("Error loading parameters:", error);
     }
     
     // Затем проверяем URL-параметры (они имеют приоритет)
@@ -91,113 +92,178 @@ export default function Home() {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(params));
   }, [ndaSafe, industry, clientFocus, language, style, model]);
 
+  // Обработчик для создания CV
+  const handleCreateCV = (userId: number) => {
+    const url = `/resume?userId=${userId}&ndaSafe=${ndaSafe}&industry=${encodeURIComponent(industry)}&clientFocus=${encodeURIComponent(clientFocus)}&language=${language}&style=${style}&model=${model}`;
+    window.location.href = url;
+  };
+
   return (
-    <main className="min-h-screen p-6">
-      <div className="max-w-4xl mx-auto p-8 bg-white">
-        <h1 className="text-3xl font-bold mb-6 text-gray-800">CVGenius</h1>
+    <main className="min-h-screen bg-gray-50 p-6">
+      <div className="max-w-6xl mx-auto">
+        <header className="bg-white p-6 rounded-lg shadow-md mb-6 flex justify-between items-center">
+          <h1 className="text-3xl font-bold text-gray-800">CVGenius</h1>
+          <button 
+            onClick={() => setShowParameters(!showParameters)}
+            className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors flex items-center"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+            {showParameters ? "Hide Parameters" : "Show Parameters"}
+          </button>
+        </header>
 
-        <div className="mb-8 bg-blue-50 p-6 rounded-lg border border-blue-100">
-          <h2 className="text-xl font-semibold mb-4 text-blue-800">Users</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {users.map((user, index) => (
-              <div
-                key={index}
-                className="bg-white p-4 rounded border border-gray-200 shadow-sm hover:shadow-md transition-shadow"
-              >
-                <h3 className="font-medium text-lg mb-1">
-                  {user.name || `User #${index + 1}`}
-                </h3>
-                <p className="text-sm text-gray-600 mb-4">{user.position}</p>
-                <Link
-                  href={`/resume?userId=${index + 1}&ndaSafe=${ndaSafe}&industry=${encodeURIComponent(industry)}&clientFocus=${encodeURIComponent(clientFocus)}&language=${language}&style=${style}&model=${model}`}
-                  className="inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors"
+        {showParameters && (
+          <div className="bg-white border border-blue-200 p-6 rounded-lg shadow-md mb-6 animate-fadeIn">
+            <h2 className="text-xl font-bold mb-4 text-blue-700">
+              Custom Parameters
+            </h2>
+
+            <div className="grid gap-6 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1">
+              <label className="flex items-center gap-3 text-gray-700 hover:bg-blue-50 p-2 rounded transition-colors">
+                <input
+                  type="checkbox"
+                  checked={ndaSafe}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNdaSafe(e.target.checked)}
+                  className="w-4 h-4 accent-blue-600"
+                />
+                <span>NDA Safe Mode</span>
+              </label>
+
+              <label className="block text-gray-700 font-medium">
+                Client Industry
+                <select
+                  value={industry}
+                  onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setIndustry(e.target.value)}
+                  className="mt-1 w-full border border-gray-300 px-3 py-2 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 hover:border-blue-400 transition-colors"
                 >
-                  Create CV
-                </Link>
-              </div>
-            ))}
+                  <option value="">Select industry</option>
+                  {industryOptions.map((option) => (
+                    <option key={option} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </select>
+              </label>
+
+              <label className="block text-gray-700 font-medium">
+                Language
+                <select
+                  value={language}
+                  onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setLanguage(e.target.value)}
+                  className="mt-1 w-full border border-gray-300 px-3 py-2 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 hover:border-blue-400 transition-colors"
+                >
+                  <option value="en">English</option>
+                  <option value="ru">Russian</option>
+                </select>
+              </label>
+
+              <label className="block text-gray-700 font-medium">
+                Resume Style
+                <select
+                  value={style}
+                  onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setStyle(e.target.value)}
+                  className="mt-1 w-full border border-gray-300 px-3 py-2 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 hover:border-blue-400 transition-colors"
+                >
+                  <option value="Technical">Technical</option>
+                  <option value="Sales-Oriented">Sales-Oriented</option>
+                </select>
+              </label>
+              
+              <label className="block text-gray-700 font-medium">
+                AI Model
+                <select
+                  value={model}
+                  onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setModel(e.target.value)}
+                  className="mt-1 w-full border border-gray-300 px-3 py-2 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 hover:border-blue-400 transition-colors"
+                >
+                  <option value="openai">OpenAI</option>
+                  <option value="deepseek">DeepSeek</option>
+                </select>
+              </label>
+
+              <label className="block col-span-full text-gray-700 font-medium">
+                Client Priorities
+                <Textarea
+                  value={clientFocus}
+                  onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setClientFocus(e.target.value)}
+                  placeholder="AWS, Team Lead, Healthcare"
+                  className="mt-1 w-full transition-colors hover:border-blue-400"
+                />
+              </label>
+            </div>
           </div>
-        </div>
+        )}
 
-        <div className="bg-white border border-blue-200 p-8 rounded-2xl mt-10 ring-blue-100">
-          <h2 className="text-2xl font-bold mb-6 text-blue-700">
-            Custom Parameters
-          </h2>
-
-          <div className="grid gap-6 sm:grid-cols-2">
-            <label className="flex items-center gap-3 text-gray-700">
-              <input
-                type="checkbox"
-                checked={ndaSafe}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNdaSafe(e.target.checked)}
-              />
-              NDA Safe Mode
-            </label>
-
-            <label className="block text-gray-700 font-medium">
-              Client Industry:
-              <select
-                value={industry}
-                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setIndustry(e.target.value)}
-                className="mt-1 w-full border border-gray-300 px-3 py-2 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-              >
-                <option value="">Select industry</option>
-                {industryOptions.map((option) => (
-                  <option key={option} value={option}>
-                    {option}
-                  </option>
+        <div className="bg-white p-6 rounded-lg shadow-md">
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-xl font-bold text-gray-800">Recent Resumes</h2>
+            <button 
+              disabled
+              className="inline-flex items-center justify-center bg-gray-400 text-white px-4 py-2 rounded cursor-not-allowed opacity-70"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+              <span>Import from Excel</span>
+            </button>
+          </div>
+          
+          <div className="overflow-hidden">
+            <table className="min-w-full bg-white rounded-lg overflow-hidden">
+              <thead className="bg-gray-100">
+                <tr>
+                  <th className="py-3 px-4 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                  <th className="py-3 px-4 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">Position</th>
+                  <th className="py-3 px-4 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-200">
+                {users.map((user, index) => (
+                  <tr 
+                    key={index} 
+                    className={`hover:bg-blue-50 transition-colors ${activeUserId === index + 1 ? 'bg-blue-50' : ''}`}
+                    onClick={() => setActiveUserId(index + 1)}
+                  >
+                    <td className="py-4 px-4 whitespace-nowrap">
+                      <div className="text-sm font-medium text-gray-900">{user.name || `User #${index + 1}`}</div>
+                    </td>
+                    <td className="py-4 px-4 whitespace-nowrap">
+                      <div className="text-sm text-gray-600">{user.position}</div>
+                    </td>
+                    <td className="py-4 px-4 whitespace-nowrap">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleCreateCV(index + 1);
+                        }}
+                        className="inline-flex items-center justify-center bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors"
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                        Create CV
+                      </button>
+                    </td>
+                  </tr>
                 ))}
-              </select>
-            </label>
-
-            <label className="block col-span-2 text-gray-700 font-medium">
-              Client Priorities:
-              <Textarea
-                value={clientFocus}
-                onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setClientFocus(e.target.value)}
-                placeholder="AWS, Team Lead, Healthcare"
-                className="mt-1"
-              />
-            </label>
-
-            <label className="block text-gray-700 font-medium">
-              Language:
-              <select
-                value={language}
-                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setLanguage(e.target.value)}
-                className="mt-1 w-full border border-gray-300 px-3 py-2 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-              >
-                <option value="en">English</option>
-                <option value="ru">Russian</option>
-              </select>
-            </label>
-
-            <label className="block text-gray-700 font-medium">
-              Resume Style:
-              <select
-                value={style}
-                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setStyle(e.target.value)}
-                className="mt-1 w-full border border-gray-300 px-3 py-2 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-              >
-                <option value="Technical">Technical</option>
-                <option value="Sales-Oriented">Sales-Oriented</option>
-              </select>
-            </label>
-            
-            <label className="block text-gray-700 font-medium">
-              AI Model:
-              <select
-                value={model}
-                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setModel(e.target.value)}
-                className="mt-1 w-full border border-gray-300 px-3 py-2 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-              >
-                <option value="openai">OpenAI</option>
-                <option value="deepseek">DeepSeek</option>
-              </select>
-            </label>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
+
+      <style jsx global>{`
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(-10px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fadeIn {
+          animation: fadeIn 0.3s ease-out forwards;
+        }
+      `}</style>
     </main>
   );
 }
