@@ -9,9 +9,12 @@ interface ProjectExperienceProps {
 export const ProjectExperience: React.FC<ProjectExperienceProps> = ({ project }) => {
   return (
     <article className="w-full text-[8px] text-black break-words leading-[1.5]">
-      <h3 className="text-[10px] font-semibold leading-tight">
-        {project.title}
-      </h3>
+      <div className="flex items-center">
+        <div className="w-1.5 h-1.5 bg-[#c1272d] mr-2 flex-shrink-0"></div>
+        <h3 className="text-[10px] font-semibold leading-tight">
+          {project.title}
+        </h3>
+      </div>
       
       <div className="w-full mt-2">
         <h4 className="font-semibold leading-tight">Project Overview</h4>

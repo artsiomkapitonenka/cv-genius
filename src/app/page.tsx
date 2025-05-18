@@ -149,7 +149,7 @@ export default function Home() {
               </label>
 
               <label className="block text-gray-700 font-medium">
-                Language
+                CV Language
                 <select
                   value={language}
                   onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setLanguage(e.target.value)}

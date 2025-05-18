@@ -6,7 +6,8 @@ import { useResumeData } from "../../hooks/useResumeData";
 import Link from "next/link";
 import { ResumePDFDownloadLink, ResumePDFViewer } from "../../components/pdf/ResumePDF";
 import "../../styles/pdf.css";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
+import { ErrorModal } from "../../components/ui/ErrorModal";
 
 // Компонент загрузки с анимацией
 const LoadingSpinner = () => (
@@ -44,9 +45,10 @@ const LoadingSpinner = () => (
 );
 
 export default function ResumePage() {
-  const { data, loading } = useResumeData();
+  const { data, loading, error, apiErrorDetails, retry } = useResumeData();
   const [showPdfPreview, setShowPdfPreview] = useState(false);
   const searchParams = useSearchParams();
+  const router = useRouter();
   
   // Получаем все параметры из URL для сохранения их в localStorage
   const model = searchParams?.get("model") || "openai";
@@ -59,8 +61,23 @@ export default function ResumePage() {
   // Формируем URL возврата с сохранением параметров
   const backUrl = `/?model=${model}&ndaSafe=${ndaSafe}&industry=${industry}&clientFocus=${encodeURIComponent(clientFocus || "")}&language=${language}&style=${style}`;
   
+  // Обработчик для повторной попытки
+  const handleRetry = () => {
+    // Вызываем функцию retry из хука
+    retry();
+  };
+  
+  // Обработчик для возврата назад
+  const handleGoBack = () => {
+    router.push(backUrl);
+  };
+  
   if (loading) {
     return <LoadingSpinner />;
+  }
+  
+  if (error) {
+    return <ErrorModal error={error} apiErrorDetails={apiErrorDetails} onRetry={handleRetry} onGoBack={handleGoBack} />;
   }
   
   return (

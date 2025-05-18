@@ -240,7 +240,10 @@ const splitProjectsForPages = (projects: Project[]) => {
 // Function to create project component
 const ProjectComponent = ({ project }: { project: Project }) => (
   <View style={{ marginBottom: 20 }} wrap={false}>
-    <Text style={styles.projectTitle}>{project.title}</Text>
+    <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
+      <View style={{ width: 5, height: 5, backgroundColor: '#c1272d', marginRight: 7, marginTop: -5 }} />
+      <Text style={styles.projectTitle}>{project.title}</Text>
+    </View>
     <Text style={styles.projectDescription}>{project.description}</Text>
 
     <View style={styles.projectDetail}>
