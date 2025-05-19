@@ -317,5 +317,713 @@
         ]
       }
     ]
+  },
+  {
+    "id": 30001,
+    "name": "Andrei S.",
+    "position": "Full-Stack Developer",
+    "experience_years": 6,
+    "skills": [
+      "JavaScript",
+      "TypeScript",
+      "React",
+      "Node.js",
+      "Express",
+      "PostgreSQL",
+      "MongoDB",
+      "GraphQL",
+      "Docker",
+      "Kubernetes",
+      "AWS",
+      "Next.js",
+      "Redis",
+      "CI/CD",
+      "Jenkins",
+      "Mocha",
+      "Chai",
+      "JIRA",
+      "Figma"
+    ],
+    "summary_notes": [
+      "full-stack JS dev with strong backend",
+      "built scalable web apps using Node.js/React",
+      "microservices + GraphQL advocate",
+      "dockerized workflows + kubernetes",
+      "infra on AWS + CI/CD pipelines"
+    ],
+    "tech_experience": [
+      { "technology": "JavaScript", "level": 5 },
+      { "technology": "React", "level": 5 },
+      { "technology": "Node.js", "level": 5 },
+      { "technology": "GraphQL", "level": 4 },
+      { "technology": "Docker", "level": 4 }
+    ],
+    "education": [
+      {
+        "degree": "Bachelor's",
+        "field": "Computer Science",
+        "institution": "Belarusian National Technical University"
+      }
+    ],
+    "language_en": "Advanced",
+    "projects": [
+      {
+        "company_name": "FitApp",
+        "title": "Fitness Coaching Platform",
+        "description": "web app for workouts, video calls, schedules, payments",
+        "role": "Full-Stack Dev",
+        "team_size": 5,
+        "technologies": [
+          "React",
+          "Node.js",
+          "GraphQL",
+          "PostgreSQL",
+          "Docker",
+          "AWS"
+        ],
+        "responsibilities": [
+          "backend api in node + graphql",
+          "frontend dashboard in react",
+          "CI setup + AWS deployment"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 30002,
+    "name": "Diana V.",
+    "position": "QA Automation Engineer",
+    "experience_years": 4,
+    "skills": [
+      "Selenium",
+      "Cypress",
+      "Postman",
+      "Java",
+      "Python",
+      "TestNG",
+      "Jenkins",
+      "Allure",
+      "RestAssured",
+      "Docker",
+      "Git",
+      "TestRail",
+      "JIRA",
+      "Confluence"
+    ],
+    "summary_notes": [
+      "strong in test automation for REST APIs + UI",
+      "selenium + java test frameworks",
+      "api tests using postman + restassured",
+      "ci integration + reporting with Allure"
+    ],
+    "tech_experience": [
+      { "technology": "Selenium", "level": 4 },
+      { "technology": "Java", "level": 4 },
+      { "technology": "Postman", "level": 5 },
+      { "technology": "Cypress", "level": 3 }
+    ],
+    "education": [
+      {
+        "degree": "Bachelor's",
+        "field": "Information Systems",
+        "institution": "Gomel State University"
+      }
+    ],
+    "language_eng": "Upper-Intermediate",
+    "projects": [
+      {
+        "company_name": "SafeBank",
+        "title": "Online Banking Platform",
+        "description": "secure web app with multi-role access + api testing",
+        "role": "QA Engineer",
+        "team_size": 9,
+        "technologies": ["Java", "Selenium", "Postman", "Docker", "TestNG"],
+        "responsibilities": [
+          "created selenium-based UI tests",
+          "wrote postman test collections",
+          "docker env setup for test cases"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 30003,
+    "name": "Yulia M.",
+    "position": "Frontend Developer",
+    "experience_years": 3,
+    "skills": [
+      "HTML5",
+      "CSS3",
+      "JavaScript",
+      "React",
+      "Vue.js",
+      "SCSS",
+      "Tailwind CSS",
+      "Figma",
+      "Jest",
+      "Webpack",
+      "Vite",
+      "Git",
+      "Slack",
+      "JIRA"
+    ],
+    "summary_notes": [
+      "UI dev with design-to-code focus",
+      "responsive SPA dev in React and Vue",
+      "worked closely with UX/UI designers",
+      "strong CSS + design systems understanding"
+    ],
+    "tech_experience": [
+      { "technology": "React", "level": 4 },
+      { "technology": "JavaScript", "level": 4 },
+      { "technology": "CSS", "level": 5 }
+    ],
+    "education": [
+      {
+        "degree": "Bachelor's",
+        "field": "Web Design",
+        "institution": "Brest State Technical University"
+      }
+    ],
+    "language_en": "Intermediate",
+    "projects": [
+      {
+        "company_name": "StyleLab",
+        "title": "Fashion E-Commerce Storefront",
+        "description": "modern UI with filters, product gallery, and cart",
+        "role": "Frontend Developer",
+        "team_size": 6,
+        "technologies": ["Vue.js", "Tailwind CSS", "Jest", "Figma"],
+        "responsibilities": [
+          "UI from figma designs",
+          "vue components + jest tests",
+          "cart logic + user interactions"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 30004,
+    "name": "Sergey D.",
+    "position": "DevOps Engineer",
+    "experience_years": 7,
+    "skills": [
+      "Docker",
+      "Kubernetes",
+      "AWS",
+      "Terraform",
+      "Jenkins",
+      "GitLab CI/CD",
+      "Linux",
+      "Ansible",
+      "Prometheus",
+      "Grafana",
+      "Helm",
+      "Nginx",
+      "Apache"
+    ],
+    "summary_notes": [
+      "infra as code + deployment pipelines",
+      "k8s cluster management + monitoring",
+      "AWS expert: EC2, ECS, S3, IAM",
+      "secure ci/cd pipelines with GitLab + Jenkins"
+    ],
+    "tech_experience": [
+      { "technology": "Docker", "level": 5 },
+      { "technology": "Kubernetes", "level": 4 },
+      { "technology": "AWS", "level": 5 },
+      { "technology": "Terraform", "level": 4 }
+    ],
+    "education": [
+      {
+        "degree": "Master's",
+        "field": "System Administration",
+        "institution": "BSUIR"
+      }
+    ],
+    "language_en": "Upper-Intermediate",
+    "projects": [
+      {
+        "company_name": "FinPort",
+        "title": "Banking Microservices Infra",
+        "description": "k8s-powered backend with autoscaling + CI pipelines",
+        "role": "DevOps Engineer",
+        "team_size": 10,
+        "technologies": ["Kubernetes", "Docker", "Terraform", "AWS", "Jenkins"],
+        "responsibilities": [
+          "EKS setup + helm deployments",
+          "terraform IaC modules",
+          "monitored via grafana/prometheus"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 30005,
+    "name": "Anastasia L.",
+    "position": "Backend Developer",
+    "experience_years": 5,
+    "skills": [
+      "Python",
+      "Django",
+      "Flask",
+      "PostgreSQL",
+      "Redis",
+      "Celery",
+      "RabbitMQ",
+      "Docker",
+      "Pytest",
+      "GitLab",
+      "Swagger",
+      "GraphQL"
+    ],
+    "summary_notes": [
+      "python backend dev",
+      "djangorest + flask for REST and GraphQL apis",
+      "async jobs with celery + redis",
+      "dockerized environments, testing culture"
+    ],
+    "tech_experience": [
+      { "technology": "Python", "level": 5 },
+      { "technology": "Django", "level": 4 },
+      { "technology": "PostgreSQL", "level": 4 }
+    ],
+    "education": [
+      {
+        "degree": "Bachelor's",
+        "field": "Applied Informatics",
+        "institution": "Grodno State University"
+      }
+    ],
+    "language_en": "Advanced",
+    "projects": [
+      {
+        "company_name": "MediCall",
+        "title": "Doctor-Patient Scheduling App",
+        "description": "api backend for scheduling and notifications",
+        "role": "Backend Developer",
+        "team_size": 4,
+        "technologies": [
+          "Django",
+          "Celery",
+          "PostgreSQL",
+          "Docker",
+          "RabbitMQ"
+        ],
+        "responsibilities": [
+          "built apis in django-rest",
+          "background job system",
+          "wrote unit + integration tests"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 30006,
+    "name": "Victor B.",
+    "position": "Mobile Developer",
+    "experience_years": 4,
+    "skills": [
+      "React Native",
+      "TypeScript",
+      "Expo",
+      "Firebase",
+      "Redux",
+      "Android",
+      "iOS",
+      "REST APIs",
+      "Push Notifications",
+      "Jest",
+      "E2E Testing",
+      "CI/CD",
+      "Fastlane"
+    ],
+    "summary_notes": [
+      "mobile cross-platform dev",
+      "React Native expert + native modules",
+      "firebase auth/storage",
+      "testing and release via fastlane"
+    ],
+    "tech_experience": [
+      { "technology": "React Native", "level": 5 },
+      { "technology": "TypeScript", "level": 4 },
+      { "technology": "Firebase", "level": 4 }
+    ],
+    "education": [
+      {
+        "degree": "Bachelor's",
+        "field": "Software Engineering",
+        "institution": "BSUIR"
+      }
+    ],
+    "language_en": "Advanced",
+    "projects": [
+      {
+        "company_name": "FitTrack",
+        "title": "Fitness Tracker Mobile App",
+        "description": "React Native app with sensors and workouts tracking",
+        "role": "Mobile Dev",
+        "team_size": 5,
+        "technologies": ["React Native", "Firebase", "Redux", "Jest"],
+        "responsibilities": [
+          "UI components + navigation",
+          "firebase backend integration",
+          "ci setup + OTA releases"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 30007,
+    "name": "Nikita F.",
+    "position": "Data Engineer",
+    "experience_years": 5,
+    "skills": [
+      "Python",
+      "SQL",
+      "Spark",
+      "Airflow",
+      "Kafka",
+      "AWS",
+      "Redshift",
+      "Docker",
+      "Linux",
+      "ETL",
+      "MongoDB",
+      "PostgreSQL",
+      "Git",
+      "Jupyter"
+    ],
+    "summary_notes": [
+      "built data pipelines at scale",
+      "expert in Spark & Airflow orchestration",
+      "etl design with Python & SQL",
+      "aws redshift & s3 data lakes",
+      "monitoring with Prometheus"
+    ],
+    "tech_experience": [
+      { "technology": "Python", "level": 5 },
+      { "technology": "Spark", "level": 4 },
+      { "technology": "Airflow", "level": 4 },
+      { "technology": "AWS", "level": 4 }
+    ],
+    "education": [
+      {
+        "degree": "Master's",
+        "field": "Data Science",
+        "institution": "Belarusian State University"
+      }
+    ],
+    "language_en": "Advanced",
+    "projects": [
+      {
+        "company_name": "RetailAnalytics",
+        "title": "Real-Time Sales Dashboard",
+        "description": "data pipeline & streaming analytics for POS data",
+        "role": "Data Engineer",
+        "team_size": 6,
+        "technologies": [
+          "Spark",
+          "Kafka",
+          "Airflow",
+          "Redshift",
+          "AWS",
+          "Docker"
+        ],
+        "responsibilities": [
+          "designed streaming ETL",
+          "built Airflow DAGs",
+          "optimized spark jobs"
+        ]
+      },
+      {
+        "company_name": "BankCore",
+        "title": "Credit Scoring Platform",
+        "description": "etl pipelines for customer data analysis",
+        "role": "ETL Developer",
+        "team_size": 5,
+        "technologies": ["Python", "SQL", "Airflow", "AWS S3", "Redshift"],
+        "responsibilities": [
+          "developed daily ETL workflows",
+          "managed s3 buckets and data versioning",
+          "wrote unit and integration tests"
+        ]
+      },
+      {
+        "company_name": "DataMine",
+        "title": "Sensor Analytics System",
+        "description": "real-time processing of IoT sensor data",
+        "role": "Data Engineer",
+        "team_size": 4,
+        "technologies": ["Kafka", "Spark Streaming", "MongoDB", "Docker"],
+        "responsibilities": [
+          "developed streaming consumers",
+          "implemented time-series aggregation",
+          "monitored latency and performance"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 30008,
+    "name": "Elena P.",
+    "position": "UI/UX Designer",
+    "experience_years": 4,
+    "skills": [
+      "Figma",
+      "Sketch",
+      "Adobe XD",
+      "InVision",
+      "Photoshop",
+      "Illustrator",
+      "HTML5",
+      "CSS3",
+      "JavaScript",
+      "React",
+      "User Research",
+      "Wireframing",
+      "Prototyping",
+      "Usability Testing",
+      "JIRA",
+      "Slack"
+    ],
+    "summary_notes": [
+      "design systems creator",
+      "ux research & prototyping",
+      "collab with front-end teams",
+      "responsive design expert",
+      "focus on accessibility"
+    ],
+    "tech_experience": [
+      { "technology": "Figma", "level": 5 },
+      { "technology": "HTML5", "level": 4 },
+      { "technology": "CSS3", "level": 4 },
+      { "technology": "User Research", "level": 4 }
+    ],
+    "education": [
+      {
+        "degree": "Bachelor's",
+        "field": "Design",
+        "institution": "Belarusian State Academy of Arts"
+      }
+    ],
+    "language_en": "Upper-Intermediate",
+    "projects": [
+      {
+        "company_name": "HealthPlus",
+        "title": "Telemedicine Web Portal",
+        "description": "patient-doctor scheduling with video consultation",
+        "role": "UI/UX Designer",
+        "team_size": 5,
+        "technologies": ["Figma", "React", "HTML5", "CSS3"],
+        "responsibilities": [
+          "user research & personas",
+          "high-fidelity prototypes",
+          "handoff to frontend devs"
+        ]
+      },
+      {
+        "company_name": "Edutech",
+        "title": "Online Learning Platform",
+        "description": "responsive design for course and quiz modules",
+        "role": "UI Designer",
+        "team_size": 6,
+        "technologies": ["Figma", "HTML5", "CSS3"],
+        "responsibilities": [
+          "wireframes and design system",
+          "responsive layout testing",
+          "implemented accessibility guidelines"
+        ]
+      },
+      {
+        "company_name": "Foodly",
+        "title": "Food Delivery App",
+        "description": "mobile-first UI/UX design for ordering and tracking food",
+        "role": "UX Designer",
+        "team_size": 4,
+        "technologies": ["Figma", "Sketch", "InVision"],
+        "responsibilities": [
+          "designed user flows",
+          "ran usability sessions",
+          "iterated based on user feedback"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 30009,
+    "name": "Mikhail R.",
+    "position": "Java Backend Developer",
+    "experience_years": 7,
+    "skills": [
+      "Java",
+      "Spring Boot",
+      "Hibernate",
+      "Microservices",
+      "Kafka",
+      "Docker",
+      "Kubernetes",
+      "PostgreSQL",
+      "MySQL",
+      "AWS",
+      "REST",
+      "GraphQL",
+      "JUnit",
+      "Maven",
+      "GitLab CI/CD",
+      "Prometheus",
+      "Grafana"
+    ],
+    "summary_notes": [
+      "java microservices architect",
+      "spring boot & hibernate expert",
+      "event-driven systems with kafka",
+      "containerization & orchestration",
+      "ci/cd pipelines in gitlab"
+    ],
+    "tech_experience": [
+      { "technology": "Java", "level": 5 },
+      { "technology": "Spring Boot", "level": 5 },
+      { "technology": "Kafka", "level": 4 },
+      { "technology": "Docker", "level": 4 }
+    ],
+    "education": [
+      {
+        "degree": "Bachelor's",
+        "field": "Software Engineering",
+        "institution": "Belarusian State University"
+      }
+    ],
+    "language_en": "Advanced",
+    "projects": [
+      {
+        "company_name": "LogiX",
+        "title": "Logistics Tracking System",
+        "description": "microservices for shipment tracking & notifications",
+        "role": "Senior Java Developer",
+        "team_size": 8,
+        "technologies": [
+          "Spring Boot",
+          "Kafka",
+          "PostgreSQL",
+          "Docker",
+          "Kubernetes"
+        ],
+        "responsibilities": [
+          "designed service architecture",
+          "implemented event consumers",
+          "setup kubernetes deployments"
+        ]
+      },
+      {
+        "company_name": "BankSecure",
+        "title": "Fraud Detection Service",
+        "description": "backend services for real-time fraud analysis",
+        "role": "Java Developer",
+        "team_size": 7,
+        "technologies": ["Java", "Spring Boot", "Kafka", "Redis"],
+        "responsibilities": [
+          "built kafka listeners",
+          "added spring caching",
+          "maintained integration tests"
+        ]
+      },
+      {
+        "company_name": "MediaSoft",
+        "title": "Video Streaming Backend",
+        "description": "api and metadata service for video streaming app",
+        "role": "Lead Backend Developer",
+        "team_size": 6,
+        "technologies": ["Java", "GraphQL", "AWS", "Docker", "PostgreSQL"],
+        "responsibilities": [
+          "designed graphql api schema",
+          "optimized db queries",
+          "managed devops tasks"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 30010,
+    "name": "Tatiana Z.",
+    "position": "Mobile QA Engineer",
+    "experience_years": 3,
+    "skills": [
+      "Appium",
+      "Detox",
+      "Espresso",
+      "XCUITest",
+      "Postman",
+      "JIRA",
+      "Git",
+      "Python",
+      "JavaScript",
+      "TestRail",
+      "CI/CD",
+      "Slack",
+      "BrowserStack"
+    ],
+    "summary_notes": [
+      "mobile test automation",
+      "appium & detox specialist",
+      "android & ios frameworks",
+      "api testing with postman",
+      "ci integration & reporting"
+    ],
+    "tech_experience": [
+      { "technology": "Appium", "level": 4 },
+      { "technology": "Detox", "level": 4 },
+      { "technology": "Espresso", "level": 3 },
+      { "technology": "XCUITest", "level": 3 }
+    ],
+    "education": [
+      {
+        "degree": "Bachelor's",
+        "field": "Information Technology",
+        "institution": "Grodno State University"
+      }
+    ],
+    "language_en": "Intermediate",
+    "projects": [
+      {
+        "company_name": "TravelGo",
+        "title": "Booking Mobile App",
+        "description": "react native app for booking flights & hotels",
+        "role": "QA Automation",
+        "team_size": 6,
+        "technologies": ["Detox", "Appium", "Postman", "BrowserStack"],
+        "responsibilities": [
+          "wrote detox e2e tests",
+          "appium scripts for regression",
+          "ci pipeline test integration"
+        ]
+      },
+      {
+        "company_name": "FitTrack",
+        "title": "Fitness Tracking App",
+        "description": "native mobile app for fitness routines and health data",
+        "role": "Mobile QA Engineer",
+        "team_size": 5,
+        "technologies": ["Appium", "Espresso", "XCUITest"],
+        "responsibilities": [
+          "automated android and ios tests",
+          "maintained smoke test suite",
+          "executed cross-device testing"
+        ]
+      },
+      {
+        "company_name": "FinApp",
+        "title": "Mobile Banking App",
+        "description": "secure finance transactions and card management",
+        "role": "QA Engineer",
+        "team_size": 7,
+        "technologies": ["Detox", "Postman", "TestRail"],
+        "responsibilities": [
+          "manual exploratory testing",
+          "detox automation coverage",
+          "reported issues and regression"
+        ]
+      }
+    ]
   }
 ]
