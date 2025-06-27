@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback, useRef, Suspense } from "react";
 import users from "@/data/users.json";
 import Textarea from "@/app/ui/Textarea";
 import { useSearchParams, useRouter } from "next/navigation";
@@ -30,7 +30,7 @@ interface CustomParameters {
 // Ключ для хранения в localStorage
 const STORAGE_KEY = "cv-genius-parameters";
 
-export default function Home() {
+function HomePage() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const urlCleaned = useRef(false);
@@ -99,7 +99,7 @@ export default function Home() {
       // Очищаем URL после применения параметров
       setTimeout(cleanUrl, 100);
     }
-  }, [searchParams, cleanUrl]); // Зависим от searchParams и cleanUrl
+  }, [searchParams, cleanUrl]);
 
   // Сохранение параметров в localStorage при их изменении
   useEffect(() => {
@@ -287,5 +287,13 @@ export default function Home() {
         }
       `}</style>
     </main>
+  );
+}
+
+export default function Home() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <HomePage />
+    </Suspense>
   );
 }

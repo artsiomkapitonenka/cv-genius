@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 import { SectionHeading } from "./SectionHeading";
 import { LanguageItem } from "./LanguageItem";
 import { Skills } from "./Skills";
@@ -18,10 +19,12 @@ export const ResumeSidebar: React.FC<ResumeSidebarProps> = ({ data }) => {
   return (
     <div className="w-full">
       <div className="flex w-full flex-col items-stretch text-[9px] text-black font-light whitespace-nowrap justify-center py-[11px]">
-        <img
-          src="https://cdn.builder.io/api/v1/image/assets/TEMP/9d814df40633154ebb9cb633f5106940a46c814d?placeholderIfAbsent=true"
-          className="aspect-[3.62] object-contain w-[87px]"
+        <Image
+          src="/images/logo.svg"
+          className="aspect-[3.67] object-contain w-[88px]"
           alt="Company logo"
+          width={88}
+          height={24}
         />
         <div className="mt-1.5">
           sales@oxagile.com

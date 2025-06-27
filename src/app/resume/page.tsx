@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, Suspense } from "react";
 import { ResumeLayout } from "../../components/resume/ResumeLayout";
 import { useResumeData } from "../../hooks/useResumeData";
 import Link from "next/link";
@@ -44,7 +44,7 @@ const LoadingSpinner = () => (
   </div>
 );
 
-export default function ResumePage() {
+function ResumePageContent() {
   const { data, loading, error, apiErrorDetails, retry } = useResumeData();
   const [showPdfPreview, setShowPdfPreview] = useState(false);
   const searchParams = useSearchParams();
@@ -124,5 +124,13 @@ export default function ResumePage() {
         )}
       </div>
     </div>
+  );
+}
+
+export default function ResumePage() {
+  return (
+    <Suspense fallback={<LoadingSpinner />}>
+      <ResumePageContent />
+    </Suspense>
   );
 } 

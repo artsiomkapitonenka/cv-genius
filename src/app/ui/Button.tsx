@@ -1,4 +1,11 @@
-export default function Button({ children, onClick }: any) {
+import React from 'react';
+
+interface ButtonProps {
+  children: React.ReactNode;
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+}
+
+export default function Button({ children, onClick }: ButtonProps) {
   return (
     <button
       onClick={onClick}

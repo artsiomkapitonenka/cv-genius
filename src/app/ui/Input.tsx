@@ -1,4 +1,12 @@
-export default function Input({ placeholder, value, onChange }: any) {
+import React from 'react';
+
+interface InputProps {
+  placeholder?: string;
+  value?: string;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+export default function Input({ placeholder, value, onChange }: InputProps) {
   return (
     <input
       type="text"
